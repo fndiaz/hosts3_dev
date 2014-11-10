@@ -1,9 +1,9 @@
 {{extend 'layout.html'}}
 
 {{block pesquisa}}
-<form action="http://127.0.0.1:8000/projeto/initial/busca_rap" method="POST">
+<form action="{{=URL('busca_rap')}}" method="POST">
 <input id="redd" name="nome" class="span3" type="text" autocomplete="off" style="margin: 0 auto;" data-provide="typeahead" data-items="4" data-source=""> 
-<input type="submit" name"Pesquisa">
+<input type="submit" name="Pesquisa">
 </form>
 {{end}}
 
@@ -92,13 +92,13 @@ tim = '500'
 }}
 
 
-<script src="{{=URL('static','js/bootstrap.min.js')}}"></script>
+<script src="{{=URL(a='projeto', c='static', f='js/bootstrap.min.js')}}"></script>
 <script>
 $(document).ready(function(){
 
 $.ajax({
 method: "get",
-url: "initial/get_json",
+url: "{{=URL(a='projeto', c='initial', f='get_json')}}",
 dataType: "json",
 success: function(nome){
   //alert(nome);
