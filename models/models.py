@@ -21,7 +21,7 @@ Distro = db.define_table("distro",
 if request.is_local:
       uploadfolder='/home/fernando/web2py/applications/projeto/static/arq'
 else:
-      uploadfolder='/var/www/hosts3/applications/projeto/static/arq'
+      uploadfolder='/var/www/ad2.com.br/hosts/applications/projeto/static/arq'
 
 Hosts = db.define_table("hosts",
       Field("id_cliente", db.cliente),
