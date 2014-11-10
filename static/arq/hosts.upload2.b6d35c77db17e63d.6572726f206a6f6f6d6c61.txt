@@ -1,0 +1,15 @@
+First you have change folder permission to 775 for the following folders:
+
+cache, logs, tmp & administrator/cache
+
+then go to: configuration.php
+
+find code:
+
+$log_path = 'XXXXXXXXXXXXX';
+$tmp_path = 'XXXXXXXXXXXXX';
+and change code into:
+
+$log_path = './logs';
+$tmp_path = './tmp';
+problem solved :)

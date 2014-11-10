@@ -1,0 +1,194 @@
+{{extend 'layout.html'}}
+
+
+{{block center}}
+<ul class="breadcrumb">
+        <li><a href="{{=URL('initial', funcao_ant1)}}">{{=nome_ant1}}</a> <span class="divider">/</span></li>
+        <li><a href="{{=URL('initial', funcao_ant, vars=dict(f=id_cliente, n1=nome_ant1, p1=funcao_ant1))}}">{{=nome_ant}}</a> <span class="divider">/</span></li>
+        <li>Editar</li>
+      </ul>
+
+{{=form.custom.begin}}
+
+<div class="span5">
+<div class="well">
+<label>Cliente:</label>
+<div>{{=form.custom.widget.id_cliente}}</div>
+<br>
+
+<label>Servidor:</label>
+<div>{{=form.custom.widget.id_servidor}}</div>
+<br>
+
+<label>Distro:</label>
+<div>{{=form.custom.widget.id_distro}}</div>
+<br>
+
+</div>
+</div>
+
+<div class="span5">
+<div class="well">
+<label>IP acesso:</label>
+<div>{{=form.custom.widget.ip_chegada}}</div>
+<br>
+
+<label>Porta ssh:</label>
+<div>{{=form.custom.widget.porta_ssh}}</div>
+<br>
+
+<label>Distro:</label>
+<div>{{=form.custom.widget.gateway}}</div>
+<br>
+
+</div>
+</div>
+
+<div class="span5">
+<div class="well">
+<label>Upload 1:</label>
+<div>{{=form.custom.widget.upload}}</div>
+{{if arq.upload != None:}}
+<a href="{{=URL(a='projeto', c='static', f='arq')}}/{{=arq.upload}}" target="_blank"><img src="{{=URL(a='projeto', c='static', f='images')}}/clip.png"></a>
+{{pass}}
+<br><br>
+
+<label>Upload 2:</label>
+<div>{{=form.custom.widget.upload2}}</div>
+{{if arq.upload2 != None:}}
+<a href="{{=URL(a='projeto', c='static', f='arq')}}/{{=arq.upload2}}" target="_blank"><img src="{{=URL(a='projeto', c='static', f='images')}}/clip.png"></a>
+{{pass}}
+<br><br>
+
+<label>Upload 3:</label>
+<div>{{=form.custom.widget.upload3}}</div>
+{{if arq.upload3 != None:}}
+<a href="{{=URL(a='projeto', c='static', f='arq')}}/{{=arq.upload3}}" target="_blank"><img src="{{=URL(a='projeto', c='static', f='images')}}/clip.png"></a>
+{{pass}}
+<br><br>
+
+</div>
+</div>
+
+<div class="span5">
+<div class="well">
+<label>Nome da máquina:</label>
+<div>{{=form.custom.widget.nome}}</div>
+<br>
+
+<label>Serviços:</label>
+<div>{{=form.custom.widget.servicos}}</div>
+<br>
+
+</div>
+</div>
+
+<div class="span5">
+<div class="well">
+<label>Nome interface 1:</label>
+<div>{{=form.custom.widget.if1}}</div>
+<br>
+
+<label>IP:</label>
+<div>{{=form.custom.widget.ip1}}</div>
+<br>
+
+<label>Máscara:</label>
+<div>{{=form.custom.widget.masc1}}</div>
+<br>
+
+<label>Observação:</label>
+<div>{{=form.custom.widget.obs1}}</div>
+<br>
+
+</div>
+</div>
+
+<div class="span5">
+<div class="well">
+<label>Nome interface 2:</label>
+<div>{{=form.custom.widget.if2}}</div>
+<br>
+
+<label>IP:</label>
+<div>{{=form.custom.widget.ip2}}</div>
+<br>
+
+<label>Máscara:</label>
+<div>{{=form.custom.widget.masc2}}</div>
+<br>
+
+<label>Observação:</label>
+<div>{{=form.custom.widget.obs2}}</div>
+<br>
+
+</div>
+</div>
+
+<div class="span5">
+<div class="well">
+<label>Nome interface 3:</label>
+<div>{{=form.custom.widget.if3}}</div>
+<br>
+
+<label>IP:</label>
+<div>{{=form.custom.widget.ip3}}</div>
+<br>
+
+<label>Máscara:</label>
+<div>{{=form.custom.widget.masc3}}</div>
+<br>
+
+<label>Observação:</label>
+<div>{{=form.custom.widget.obs3}}</div>
+<br>
+
+</div>
+</div>
+
+<div class="span5">
+<div class="well">
+<label>Nome interface 4:</label>
+<div>{{=form.custom.widget.if4}}</div>
+<br>
+
+<label>IP:</label>
+<div>{{=form.custom.widget.ip4}}</div>
+<br>
+
+<label>Máscara:</label>
+<div>{{=form.custom.widget.masc4}}</div>
+<br>
+
+<label>Observação:</label>
+<div>{{=form.custom.widget.obs4}}</div>
+<br>
+
+</div>
+</div>
+
+<div class="span5">
+<div class="well">
+<label>Observações gerais:</label>
+<div>{{=form.custom.widget.obs_gerais}}</div>
+<br>
+
+</div>
+</div>
+
+<div class="span5">
+<div class="well">
+<label>Rotas:</label>
+<div>{{=form.custom.widget.rotas}}</div>
+<br>
+</div>
+</div>
+
+<div class="span5">
+<button type="submit" class="btn btn-primary">Enviar</button>
+{{=form.custom.end}}
+</div>
+
+
+
+{{end}}

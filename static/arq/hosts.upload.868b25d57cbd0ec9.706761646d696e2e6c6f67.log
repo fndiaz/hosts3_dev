@@ -1,0 +1,9 @@
+2013-02-20 09:17:39 ERROR  : Error connecting to the server: fe_sendauth: no password supplied
+
+2013-02-20 09:18:12 ERROR  : Error connecting to the server: fe_sendauth: no password supplied
+
+2013-02-27 08:24:46 ERROR  : Error connecting to the server: could not translate host name "hosts3" to address: Nome ou serviço desconhecido
+
+2013-02-27 09:54:57 ERROR  : Error connecting to the server: FATAL:  password authentication failed for user "postgre"
+FATAL:  password authentication failed for user "postgre"
+
