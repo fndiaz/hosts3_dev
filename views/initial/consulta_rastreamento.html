@@ -1,0 +1,24 @@
+{{extend 'layout.html'}}
+
+
+{{block center}}
+
+<div class="codemax">
+
+<h4><span style="color: black;">Rastreamento chamada</span></h4>
+
+<pre class="code literal-block" style="background:#333333">
+{{for item in con:}}
+
+<span class="mi" style="color:#f8f8f2">$ {{=item['horario']}} | {{=item['origem']}} | {{=item['destino']}} | {{=item['channel']}} 
+{{=item['valor']}}</span>
+
+{{pass}}
+</pre>
+
+
+
+</div>
+
+
+{{end}}

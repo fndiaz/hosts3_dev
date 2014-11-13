@@ -17,7 +17,10 @@
         <li><a href="{{=URL('initial', funcao_ant1)}}">{{=nome_ant1}}</a> <span class="divider">/</span></li>
         <li><a href="{{=URL('initial', funcao_ant, vars=dict(f=id_cliente, n1=nome_ant1, p1=funcao_ant1))}}">{{=nome_ant}}</a> <span class="divider">/</span></li>
         <li>Detalhes</li>
-      </ul>
+        {{if (detalhes.distro.nome == 'Debian 7.0 (Wheezy)' and detalhes.servidor.nome == 'VOIP'):}}
+        <li style="float: right;"><a href="{{=URL(a='projeto', c='initial', f='area_server', vars={'vpn':detalhes.hosts.ip_chegada} )}}" target="_blank">Gerenciar</a></li>
+        {{pass}}
+</ul>
 
 <div class="span5" >
 <div class="well">

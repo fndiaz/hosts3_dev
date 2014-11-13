@@ -1,0 +1,47 @@
+{{extend 'layout.html'}}
+
+{{block pesquisa}}
+<form action="{{=URL(a='projeto', c='initial', f='consulta_chamada', vars={'vpn':request.vars.vpn} )}}" method="POST">
+<input id="num" name="num" class="span3" type="text" autocomplete="off" style="margin: 0 auto;" data-provide="typeahead" data-items="4" data-source=""> 
+<input type="submit" name="Pesquisa">
+</form>
+{{end}}
+
+
+{{block center}}
+
+<div class="span11">
+
+<h4><span style="color: black;">Chamadas</span></h4>
+
+<table class="table table-bordered table-striped table-hover">
+    <thead>
+      <tr>
+        <th>Horário</th>
+        <th>Origem</th>
+        <th>Destino</th>
+        <th>LinkedID</th>
+    </tr>
+    </thead>
+    <tbody>
+  
+{{for item in con:}}
+	  <tr>
+        <td>{{=item['horario']}}</td>
+        <td>{{=item['origem']}}</td>
+        <td>{{=item['destino']}}</td>
+        <td><a href="{{=URL(a='projeto', c='initial', f='consulta_rastreamento', vars={'vpn':request.vars.vpn, 'linkedid':item['linked_id'] } )}}", target=_blank>{{=item['linked_id']}}</a></td>
+      </tr>
+{{pass}}
+
+</tbody>
+  </table>
+
+
+
+
+
+</div>
+
+
+{{end}}

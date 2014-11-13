@@ -88,11 +88,12 @@ def cliente_host():
     		      _href=URL("initial", "/edit_host", 
     		      vars=dict(f=row.hosts.id, c=filtro, n=cliente.nome, 
     		      		n1='Clientes', p1='show_cliente', p='cliente_host')))]
+
 	db.hosts.id.readable=False
 	db.distro.img.readable=False
 	
 	fields = (db.hosts.id, db.hosts.id_servidor, db.hosts.id_distro, db.distro.img, 
-			  db.hosts.ip_chegada, db.hosts.porta_ssh, db.hosts.gateway)
+			  db.hosts.ip_chegada, db.hosts.nome)
 	headers = {'hosts.id':   'ID',
 			   'hosts.id_cliente': 'Cliente',
                'hosts.id_servidor': 'Servidor',
@@ -100,7 +101,7 @@ def cliente_host():
                'hosts.nome': 'Nome',
 	           'hosts.servicos': 'Servicos'}
 	grid = SQLFORM.grid(query=query, fields=fields, headers=headers, csv=False,
-						details=False, searchable=False, maxtextlength=23, links=links, 
+						details=False, searchable=False, maxtextlength=35, links=links, 
 						links_placement='left', editable=False, create=False)
 
 	return response.render("initial/show_grid2.html", grid=grid, nome_ant1=nome_ant1, 
@@ -137,7 +138,7 @@ def servidor_host():
     		      		n1='Servidores', p1='show_servidor', p='servidor_host')))]
 
 	fields = (db.hosts.id, db.hosts.id_cliente, db.hosts.id_distro, db.distro.img, 
-				db.hosts.ip_chegada, db.hosts.porta_ssh, db.hosts.gateway)
+				db.hosts.ip_chegada, db.hosts.nome)
 	headers = {'hosts.id':   'ID',
 			   'hosts.id_cliente': 'Cliente',
                'hosts.id_servidor': 'Servidor',
@@ -145,7 +146,7 @@ def servidor_host():
                'hosts.nome': 'Nome',
 	           'hosts.servicos': 'Servicos'}
 	grid = SQLFORM.grid(query=query, fields=fields, headers=headers, csv=False,
-						details=False, searchable=False, maxtextlength=23, links=links, 
+						details=False, searchable=False, maxtextlength=35, links=links, 
 						links_placement='left', editable=False, create=False)
 
 	return response.render("initial/show_grid2.html", grid=grid, nome_ant1=nome_ant1, 
@@ -181,7 +182,7 @@ def distro_host():
     		      		n1='Distros', p1='show_distro', p='distro_host')))]
 
 	fields = (db.hosts.id, db.hosts.id_cliente, db.hosts.id_servidor, db.distro.img, 
-			  db.hosts.ip_chegada, db.hosts.porta_ssh, db.hosts.gateway)
+			  db.hosts.ip_chegada, db.hosts.nome)
 	headers = {'hosts.id':   'ID',
 				'hosts.id_cliente': 'Cliente',
                'hosts.id_servidor': 'Servidor',
@@ -189,7 +190,7 @@ def distro_host():
                'hosts.nome': 'Nome',
 	           'hosts.servicos': 'Servicos'}
 	grid = SQLFORM.grid(query=query, fields=fields, headers=headers, csv=False,
-						details=False, searchable=False, maxtextlength=23, links=links, 
+						details=False, searchable=False, maxtextlength=35, links=links, 
 						links_placement='left', editable=False, create=False)
 
 	return response.render("initial/show_grid2.html", grid=grid, nome_ant1=nome_ant1, 
@@ -363,3 +364,70 @@ def email(host):
 			subject="host adicionado",
 			message="<html>Um novo host foi adicionado pelo usuário %s <br>nome: %s <br>vpn: %s<br><br>É preciso fazer a instalação do client zabbix e bacula</html>" % (auth.user.first_name, host.nome, host.ip_chegada,)
 			)
+
+
+#####################################
+##Area_Server
+#####################################
+def area_server():
+	return response.render('initial/area_server.html')
+
+def consulta_server():
+	import urllib2, requests, json, sys	
+	ip=request.vars.vpn
+
+	try:
+		print 'tentando consulta..'
+		r=requests.get('http://%s:81/admanager/manager/especificacoes_json' %(ip), timeout=10)
+		print'consultou'
+		con = r.json()
+	except:
+		print 'erro consulta'
+		return response.json([ip, 'failed'])
+
+	for item in con:
+		print item
+		print con[item]
+		print '\n'
+
+	return response.json(con)
+
+def consulta_chamada():
+	import urllib2, requests, json, sys
+	print request.vars
+	ip=request.vars.vpn
+	num=request.vars.num
+	print ip
+	print num
+
+	try:
+		print 'tentando consulta..'
+		r=requests.get('http://%s:81/admanager/manager/chamadas_json?num=%s' %(ip, num), timeout=10)
+		con = r.json()
+		print'consultou'
+	except:
+		con={}
+		print 'erro consulta'
+
+	return response.render('initial/consulta_chamada.html', con=con)
+
+def consulta_rastreamento():
+	import urllib2, requests, json, sys
+	print request.vars
+	ip=request.vars.vpn
+	linkedid=request.vars.linkedid
+
+	try:
+		print 'tentando consulta..'
+		r=requests.get('http://%s:81/admanager/manager/rastreio_json?linkedid=%s' %(ip, linkedid), timeout=10)
+		con = r.json()
+		print'consultou'
+	except:
+		con={}
+		print 'erro consulta'
+
+	print con
+
+	return response.render('initial/consulta_rastreamento.html', con=con)
+
+

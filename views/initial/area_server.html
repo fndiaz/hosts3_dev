@@ -1,0 +1,251 @@
+{{extend 'layout.html'}}
+
+
+{{block center}}
+
+<ul class="breadcrumb">
+
+<li>Status Servidor</li>
+<li>|</li>
+<li>
+<a href="{{=URL(a='projeto', c='initial', f='consulta_chamada', vars={'vpn':request.vars.vpn} )}}">Buscar Chamadas</a>
+</li>
+
+</ul>
+
+<div class="span3">
+<div class="well">
+<h5><span style="color: black;">Partição /</span></h3>
+
+
+<p><b>Tipo:</b> <span id='discos_fstype'></span></p>
+<p><b>Device:</b> <span id='discos_devicee'></span></p>
+<p><b>Total:</b> <span id='discos_total'></span></p>
+<p><b>Livre:</b> <span id='discos_free'></span></p>
+<p><b>Usado:</b> <span id='discos_used'></span></p>
+<p><b>Porcentagem:</b> <span id='discos_percent'></span></p>
+
+<div class="progress progress-striped active">
+  <div id="bar_barra" class="bar" style=""></div>
+</div>
+
+</div>
+</div>
+
+<div class="span3">
+<div class="well">
+<h5><span style="color: black;">Partição /var</span></h3>
+
+
+<p><b>Tipo:</b> <span id='discos2_fstype'></span></p>
+<p><b>Device:</b> <span id='discos2_device'></span></p>
+<p><b>Total:</b> <span id='discos2_total'></span></p>
+<p><b>Livre:</b> <span id='discos2_free'></span></p>
+<p><b>Usado:</b> <span id='discos2_used'></span></p>
+<p><b>Porcentagem:</b> <span id='discos2_percent'></span></p>
+
+<div class="progress progress-striped active">
+  <div id="bar2_barra" class="bar" style=""></div>
+</div>
+
+</div>
+</div>
+
+<div class="span3">
+<div class="well">
+<h5><span style="color: black;">Partição /dados_raiz</span></h3>
+
+
+<p><b>Tipo:</b> <span id='discos3_fstype'></span></p>
+<p><b>Device:</b> <span id='discos3_device'></span></p>
+<p><b>Total:</b> <span id='discos3_total'></span></p>
+<p><b>Livre:</b> <span id='discos3_free'></span></p>
+<p><b>Usado:</b> <span id='discos3_used'></span></p>
+<p><b>Porcentagem:</b> <span id='discos3_percent'></span></p>
+
+<div class="progress progress-striped active">
+  <div id="bar3_barra" class="bar" style=""></div>
+</div>
+
+</div>
+</div>
+
+<div class="span3">
+<div class="well">
+<h5><span style="color: black;">Memória Virtual</span></h3>
+
+<p><b>Total:</b> <span id='mem_total'></span></p>
+<p><b>Livre:</b> <span id='mem_free'></span></p>
+<p><b>Usado:</b> <span id='mem_used'></span></p>
+<p><b>Cached:</b> <span id='mem_cached'></span></p>
+<p><b>Buffers:</b> <span id='mem_buffers'></span></p>
+<p><b>Porcentagem:</b> <span id='mem_percent'></span></p>
+
+<div class="progress progress-striped active">
+  <div id="bar_mem" class="bar" style=""></div>
+</div>
+
+</div>
+</div>
+
+<div class="span3">
+<div class="well">
+<h5><span style="color: black;">Memória Swap </span></h3>
+
+<p>&nbsp;</p>
+<p><b>Total:</b> <span id='swap_total'></span></p>
+<p><b>Livre:</b> <span id='swap_free'></span></p>
+<p><b>Usado:</b> <span id='swap_used'></span></p>
+<p><b>Porcentagem:</b> <span id='swap_percent'></span></p>
+<p>&nbsp;</p>
+
+<div class="progress progress-striped active">
+  <div id="bar_swap" class="bar" style=""></div>
+</div>
+
+</div>
+</div>
+
+<div class="span3">
+<div class="well">
+<h5><span style="color: black;">Load Server</span></h3>
+
+<p><b>Load 1:</b> <span id='load1'></span></p>
+<p><b>Load 2:</b> <span id='load2'></span></p>
+<p><b>Load 3:</b> <span id='load3'></span></p>
+
+<div id='chart_div' style="margin-left: 16%"></div>
+</div>
+</div>
+
+
+<script type='text/javascript' src='https://www.google.com/jsapi'></script>
+<script src="{{=URL(a='projeto', c='static', f='js/bootstrap.min.js')}}"></script>
+<script>
+
+      google.load('visualization', '1', {packages:['gauge']});
+      google.setOnLoadCallback(drawChart);
+
+      function drawChart() { //googlechart
+        var data = google.visualization.arrayToDataTable([
+          ['Label', 'Value'],
+          ['Load', 0]
+        ]);
+
+        var options = {
+          width: 400, height: 120,
+          redFrom: 6, redTo: 10,
+          yellowFrom:3, yellowTo: 6,
+          max: 10.0,
+          minorTicks: 5,
+          majorTicks : ['0','1','2','3','4','5','6','7','8','9','10']
+        };
+
+        var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
+        chart.draw(data, options);
+
+
+poll2();
+function poll2() {
+$.ajax({
+method: "get",
+url: "{{=URL(a='projeto', c='initial', f='consulta_server', vars={'vpn':request.vars.vpn})}}",
+dataType: "json",
+success: function(lista){ //success
+  //alert(lista['memory']['virtual_memory']['used'])
+  
+  //Consulta url mal sucedida
+  if (lista[1] == 'failed'){
+    alert(lista)
+
+  }
+  //Consulta url bem sucedida, entra em loop
+  else{
+
+  jQuery.each( lista, function( i, val ) { //loop Master
+  //alert(i)
+  //alert(val)
+  $("#load1").text(lista['load']['l1']);
+  $("#load2").text(lista['load']['l2']);
+  $("#load3").text(lista['load']['l3']);
+  //setando valor google graph
+  data.setValue(0, 1, lista['load']['l1']);
+  chart.draw(data, options);
+
+
+    if (i == 'discos') { //if discos
+      var discos = val
+      for (var item in discos) {
+
+        if (item == '/'){
+          $("#discos_total").text(discos[item]['total']);
+          $("#discos_used").text(discos[item]['used']);
+          $("#discos_free").text(discos[item]['free']);
+          $("#discos_fstype").text(discos[item]['fstype']);
+          $("#discos_device").text(discos[item]['device']);
+          $("#discos_percent").text(discos[item]['percent']);
+          $('#bar_barra').css('width', discos[item]['percent']+"%");
+        }
+        if (item == '/var'){
+          $("#discos2_total").text(discos[item]['total']);
+          $("#discos2_used").text(discos[item]['used']);
+          $("#discos2_free").text(discos[item]['free']);
+          $("#discos2_fstype").text(discos[item]['fstype']);
+          $("#discos2_device").text(discos[item]['device']);
+          $("#discos2_percent").text(discos[item]['percent']);
+          $('#bar2_barra').css('width', discos[item]['percent']+"%");
+        }
+        if ((item == '/dados') || (item == '/dados_raiz')){
+          $("#discos3_total").text(discos[item]['total']);
+          $("#discos3_used").text(discos[item]['used']);
+          $("#discos3_free").text(discos[item]['free']);
+          $("#discos3_fstype").text(discos[item]['fstype']);
+          $("#discos3_device").text(discos[item]['device']);
+          $("#discos3_percent").text(discos[item]['percent']);
+          $('#bar3_barra').css('width', discos[item]['percent']+"%");
+        }
+      }
+
+    } //if discos
+
+    if (i == 'memory') { //if memory
+      var memory = val
+      for (var item in memory) { 
+
+        if (item == 'virtual_memory'){
+          $("#mem_total").text(memory[item]['total']);
+          $("#mem_used").text(memory[item]['used']);
+          $("#mem_free").text(memory[item]['free']);
+          $("#mem_cached").text(memory[item]['cached']);
+          $("#mem_percent").text(memory[item]['percent']);
+          $("#mem_buffers").text(memory[item]['buffers']);
+          $('#bar_mem').css('width', memory[item]['percent']+"%");
+        }
+        if (item == 'swap_memory'){
+          $("#swap_total").text(memory[item]['total']);
+          $("#swap_used").text(memory[item]['used']);
+          $("#swap_free").text(memory[item]['free']);
+          $("#swap_percent").text(memory[item]['percent']);
+          $('#bar_swap').css('width', memory[item]['percent']+"%");
+        }
+      }
+
+    } //if memory
+  
+  });//loop master
+
+setTimeout(poll2, 1000);
+}//else loop
+
+
+}//success
+});//ajax
+}//poll2
+
+};//googlechart
+
+
+</script>
+
+
+{{end}}
