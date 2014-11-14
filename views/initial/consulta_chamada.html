@@ -1,6 +1,17 @@
 {{extend 'layout.html'}}
 
 {{block pesquisa}}
+
+<ul class="breadcrumb">
+
+<li><a href="{{=URL(a='projeto', c='initial', f='area_server', vars={'vpn':request.vars.vpn} )}}">Status Servidor</a></li>
+<li>|</li>
+<li>
+Buscar Chamadas
+</li>
+
+</ul>
+
 <form action="{{=URL(a='projeto', c='initial', f='consulta_chamada', vars={'vpn':request.vars.vpn} )}}" method="POST">
 <input id="num" name="num" class="span3" type="text" autocomplete="off" style="margin: 0 auto;" data-provide="typeahead" data-items="4" data-source=""> 
 <input type="submit" name="Pesquisa">
