@@ -378,7 +378,7 @@ def consulta_server():
 
 	try:
 		print 'tentando consulta..'
-		r=requests.get('http://%s:81/admanager/manager/especificacoes_json' %(ip), timeout=10)
+		r=requests.get('http://%s:81/admanager/manager/especificacoes_json' %(ip), timeout=15)
 		print'consultou'
 		con = r.json()
 	except:
@@ -393,6 +393,7 @@ def consulta_server():
 	return response.json(con)
 
 def consulta_chamada():
+	print 'Consulta Chamada'
 	import urllib2, requests, json, sys
 	print request.vars
 	ip=request.vars.vpn
@@ -402,7 +403,7 @@ def consulta_chamada():
 
 	try:
 		print 'tentando consulta..'
-		r=requests.get('http://%s:81/admanager/manager/chamadas_json?num=%s' %(ip, num), timeout=10)
+		r=requests.get('http://%s:81/admanager/manager/chamadas_json?num=%s' %(ip, num), timeout=25)
 		con = r.json()
 		print'consultou'
 	except:
@@ -419,7 +420,7 @@ def consulta_rastreamento():
 
 	try:
 		print 'tentando consulta..'
-		r=requests.get('http://%s:81/admanager/manager/rastreio_json?linkedid=%s' %(ip, linkedid), timeout=10)
+		r=requests.get('http://%s:81/admanager/manager/rastreio_json?linkedid=%s' %(ip, linkedid), timeout=15)
 		con = r.json()
 		print'consultou'
 	except:
@@ -429,5 +430,6 @@ def consulta_rastreamento():
 	print con
 
 	return response.render('initial/consulta_rastreamento.html', con=con)
+
 
 
